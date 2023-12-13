@@ -19,7 +19,9 @@
 2. 看到创建完成后在项目目录下找到`chatgptAccount.txt` 里面就是生成的账号密码
 
 ## 可能遇到的问题
+
 1. 报错提示`Could not find Chrome`, 此错误说明电脑环境没有Chrome, 使用`npx puppeteer browsers install chrome`安装即可
+2. 报错提示`No element found for selector: #swal2-input`, 此错误说明网络可能有些慢,打开`util/getAccount.js`,全局搜索`等待2s确定弹框弹出`,将下面的`await chatGPTPage.waitForTimeout(2000);`2000改为3000或更多即可
 
 ## 免责声明
 
