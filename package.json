@@ -1,0 +1,19 @@
+{
+  "name": "registration_chatgpt",
+  "version": "1.0.0",
+  "description": "使用Puppeteer,tempmail实现自动批量注册ChatGPT账号",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "Puppeteer",
+    "tempmail",
+    "chatGPT"
+  ],
+  "author": "NOVCH",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^21.6.0"
+  }
+}
