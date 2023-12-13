@@ -21,7 +21,7 @@
 ## 可能遇到的问题
 
 1. 报错提示`Could not find Chrome`, 此错误说明电脑环境没有Chrome, 使用`npx puppeteer browsers install chrome`安装即可
-2. 报错提示`No element found for selector: #swal2-input`, 此错误说明网络可能有些慢,打开`util/getAccount.js`,全局搜索`等待2s确定弹框弹出`,将下面的`await chatGPTPage.waitForTimeout(2000);`2000改为3000或更多即可
+2. 报错提示`No element found for selector: #swal2-input`, 此错误说明网络可能有些慢,打开`util/getAccount.js`,全局搜索`chatGPTPage.waitForTimeout`,将里面的值调高一些,例如`await chatGPTPage.waitForTimeout(2000);`改为`await chatGPTPage.waitForTimeout(6000);`
 
 ## 免责声明
 
