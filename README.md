@@ -13,9 +13,16 @@
 1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`  
 2. cd registration_chatgpt
 3. npm install
-4. npm run test
 
-看到创建完成
-下面就是自动生成的账号密码
-目前执行一次生成一个  
-后面会再开发批量生成并写入文件  
+## 生成单个  
+
+1. npm run test
+2. 看到创建完成
+3. 下面就是自动生成的账号密码
+
+## 生成多个  
+
+1. npm run get {num} 例如 `npm run get 10` 批量生成10个
+2. 看到创建完成后在项目目录下找到`chatgptAccount.txt` 里面就是生成的账号密码
+
+

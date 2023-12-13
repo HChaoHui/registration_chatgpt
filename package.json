@@ -4,7 +4,8 @@
   "description": "使用Puppeteer,tempmail实现自动批量注册ChatGPT账号",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "get": "node index.js"
   },
   "keywords": [
     "Puppeteer",
