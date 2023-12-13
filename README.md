@@ -18,6 +18,9 @@
 1. npm run get {num} 例如 `npm run get 10` 批量生成10个
 2. 看到创建完成后在项目目录下找到`chatgptAccount.txt` 里面就是生成的账号密码
 
+## 可能遇到的问题
+1. 报错提示`Could not find Chrome`, 此错误说明电脑环境没有Chrome, 使用`npx puppeteer browsers install chrome`安装即可
+
 ## 免责声明
 
 欢迎使用本程序(软件)。在使用本程序(软件)之前，请务必仔细阅读以下免责声明。通过使用本程序(软件)，即表示您同意以下声明的内容。
