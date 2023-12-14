@@ -57,15 +57,23 @@ let getAccount = async () => {
     console.log("点击创建按钮");
     await chatGPTPage.click('button[type="submit"]');
 
-    console.log("等待点击创建完成后跳转页面加载完成");
-    await chatGPTPage.waitForSelector('#submit-token');
+    try {
+        console.log("等待点击创建完成后跳转页面加载完成");
+        await chatGPTPage.waitForSelector('#submit-token');
+    } catch (error) {
+        getAccount()
+    }
 
     console.log("回到邮件页面");
     const allPages = await browser.pages();
     await allPages[1].bringToFront();
 
-    console.log("等待收取邮件完成");
-    await tempMailPage.waitForSelector('#maillist > tr')
+    try {
+        console.log("等待收取邮件完成");
+        await tempMailPage.waitForSelector('#maillist > tr')
+    } catch (error) {
+        getAccount()
+    }
 
     console.log("点击获取到的邮件");
     await tempMailPage.click("#maillist > tr")
@@ -86,17 +94,29 @@ let getAccount = async () => {
     console.log("等待2s确定弹框弹出");
     await chatGPTPage.waitForTimeout(2000);
 
-    console.log("插入注册链接");
-    await chatGPTPage.type('#swal2-input', linkValue);
+    try {
+        console.log("插入注册链接");
+        await chatGPTPage.type('#swal2-input', linkValue);
+    } catch (error) {
+        getAccount()
+    }
 
     console.log("等待2s确定插入成功");
     await chatGPTPage.waitForTimeout(2000);
 
-    console.log("点击确认按钮");
-    await chatGPTPage.click("body > div.swal2-container.swal2-center.swal2-backdrop-show > div > div.swal2-actions > button.swal2-confirm.swal2-styled")
+    try {
+        console.log("点击确认按钮");
+        await chatGPTPage.click("body > div.swal2-container.swal2-center.swal2-backdrop-show > div > div.swal2-actions > button.swal2-confirm.swal2-styled")
+    } catch (error) {
+        getAccount()
+    }
 
-    console.log("等待创建完成");
-    await chatGPTPage.waitForSelector('#username');
+    try {
+        console.log("等待创建完成");
+        await chatGPTPage.waitForSelector('#username');
+    } catch (error) {
+        getAccount()
+    }
 
     console.log("创建完成");
     console.log("账号:" + mailValue);

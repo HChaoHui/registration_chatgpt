@@ -33,7 +33,9 @@ let goGet = async () => {
 
 }
 
-goGet()
+goGet();
+
+module.exports = goGet
 
 
 
