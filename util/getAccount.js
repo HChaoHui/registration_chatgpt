@@ -1,15 +1,20 @@
-const puppeteer = require('puppeteer');
+const { puppeteer, executablePath } = require('./puppeteer');
+const config = require("./config")
+
+const pathToExtension = require('path').join(__dirname, '../plugin/CapSolver.Browser.Extension');
 
 let getAccount = async () => {
 
-    console.log("创建浏览器成功");
-    const browser = await puppeteer.launch(
-        {
-            headless: "new"
-        }
-    );
+    browser = await puppeteer.launch({
+        headless: "new",
+        args: [
+            `--disable-extensions-except=${pathToExtension}`,
+            `--load-extension=${pathToExtension}`,
+        ],
+        executablePath: executablePath()
+    });
 
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.';
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let passWord = '';
     let passwordLength = 20;
 
@@ -22,12 +27,10 @@ let getAccount = async () => {
 
     console.log("打开临时邮箱页面");
     const tempMailPage = await browser.newPage();
-    await tempMailPage.goto("https://mail.cxai.cc")
+    await tempMailPage.goto(config.MailAddress)
 
-    console.log("等待4s确定邮箱加载完成");
     await tempMailPage.waitForTimeout(4000);
 
-    console.log("获取邮箱");
     const inputMailSelector = '#shortid'; // 替换为实际的输入框 id
     const mailValue = await tempMailPage.evaluate((selector) => {
         const inputElement = document.querySelector(selector);
@@ -42,23 +45,20 @@ let getAccount = async () => {
 
     console.log("打开ChatGPT注册页面");
     const chatGPTPage = await browser.newPage();
-    await chatGPTPage.goto('https://chat.oaifree.com/auth/signup');
+    await chatGPTPage.goto(config.RegisteredAddress);
 
-    console.log("等待2s确定注册页面加载完成");
     await chatGPTPage.waitForTimeout(2000);
 
     console.log("插入账号密码");
     await chatGPTPage.type('input#username', mailValue);
     await chatGPTPage.type('input#password', passWord);
 
-    console.log("等待2s确定数据插入完成");
     await chatGPTPage.waitForTimeout(2000);
 
     console.log("点击创建按钮");
     await chatGPTPage.click('button[type="submit"]');
 
     try {
-        console.log("等待点击创建完成后跳转页面加载完成");
         await chatGPTPage.waitForSelector('#submit-token');
     } catch (error) {
         getAccount()
@@ -69,7 +69,6 @@ let getAccount = async () => {
     await allPages[1].bringToFront();
 
     try {
-        console.log("等待收取邮件完成");
         await tempMailPage.waitForSelector('#maillist > tr')
     } catch (error) {
         getAccount()
@@ -85,13 +84,11 @@ let getAccount = async () => {
     console.log("回到注册页面");
     await allPages[2].bringToFront();
 
-    console.log("等待2s确定页面加载完成");
     await chatGPTPage.waitForTimeout(2000);
 
     console.log("点击粘贴按钮");
     await chatGPTPage.click('#submit-token')
 
-    console.log("等待2s确定弹框弹出");
     await chatGPTPage.waitForTimeout(2000);
 
     try {
@@ -101,19 +98,35 @@ let getAccount = async () => {
         getAccount()
     }
 
-    console.log("等待2s确定插入成功");
     await chatGPTPage.waitForTimeout(2000);
 
     try {
         console.log("点击确认按钮");
-        await chatGPTPage.click("body > div.swal2-container.swal2-center.swal2-backdrop-show > div > div.swal2-actions > button.swal2-confirm.swal2-styled")
+        let sureBtn = 'body > div.swal2-container.swal2-center.swal2-backdrop-show > div > div.swal2-actions > button.swal2-confirm.swal2-styled'
+        await chatGPTPage.click(sureBtn)
     } catch (error) {
         getAccount()
     }
 
     try {
-        console.log("等待创建完成");
+
         await chatGPTPage.waitForSelector('#username');
+
+        console.log("插入用户名");
+
+        await chatGPTPage.type('#username', "ChatGPT_Bot");
+
+        let tellBtn = 'body > div.oai-wrapper > main > section > div > div > div > form > div.cc6121580 > button'
+
+        await chatGPTPage.waitForTimeout(3000);
+        
+        console.log("点击进行图像验证");
+        await chatGPTPage.click(tellBtn);
+
+        let isLoginBtn = 'body > div > main > section > div > div > div > div:nth-child(2) > p > a'
+
+        await chatGPTPage.waitForSelector(isLoginBtn);
+
     } catch (error) {
         getAccount()
     }

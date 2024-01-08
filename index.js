@@ -3,7 +3,6 @@
  * Date: 2023-12-13
  */
 
-
 const args = process.argv.slice(2);
 let num = args[0] ? Number(args[0]) : null;
 const fs = require('fs');
@@ -34,9 +33,6 @@ let goGet = async () => {
 }
 
 goGet();
-
-module.exports = goGet
-
 
 
 

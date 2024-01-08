@@ -6,6 +6,9 @@
 1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`  
 2. cd registration_chatgpt
 3. npm install
+4. `plugin/CapSolver.Browser.Extension/assets/config.js`，修改里面的apiKey为你的capsolver Key  
+
+capsolver官网`https://www.capsolver.com/`
 
 ## 生成单个  
 
