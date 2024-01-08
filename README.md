@@ -1,5 +1,7 @@
 # 基于NodeJs批量生成ChatGPT账号 
-> node版本需 >= 18.16.0 小于版本需自测
+> node版本需 >= 18.16.0 小于版本需自测  
+> 基于Pandora-Next实现不限制IP注册  
+> 基于capsolver自动识别验证码  
 
 ## 使用方法
 
@@ -8,7 +10,8 @@
 3. npm install
 4. `plugin/CapSolver.Browser.Extension/assets/config.js`，修改里面的apiKey为你的capsolver Key  
 
-capsolver官网`https://www.capsolver.com/`
+capsolver官网`https://www.capsolver.com/`  
+capsolver官网可以领取试用的1美金，大概可以自动识别1000次左右  
 
 ## 生成单个  
 
