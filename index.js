@@ -24,14 +24,25 @@ async function getSingleAccount() {
 }
 
 async function getMultipleAccounts(num) {
-    let accountCount = 0;
+    let successAccountCount = 0;
+    let errorAccountCount = 0;
     while (num > 0) {
         const account = await getAccount();
-        fs.writeFileSync("./chatgptAccount.txt", JSON.stringify(account) + '\n', { flag: 'a' });
-        accountCount++;
+        if (account) {
+            fs.writeFileSync("./chatgptAccount.txt", JSON.stringify(account) + '\n', { flag: 'a' });
+            successAccountCount++;
+        }
+
+        if (!account) {
+            errorAccountCount++
+        }
+
         num--;
     }
-    console.log("创建完成, 共计 " + accountCount + " 个");
+    
+    console.log("创建完成, 共计 " + num + " 个\n");
+    console.log("成功 " + successAccountCount + " 个\n");
+    console.log("失败" + errorAccountCount + " 个\n");
 }
 
 goGet(num);
