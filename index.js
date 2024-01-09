@@ -19,8 +19,15 @@ async function goGet(num) {
 
 async function getSingleAccount() {
     const account = await getAccount();
-    fs.writeFileSync("./chatgptAccount.txt", JSON.stringify(account) + '\n', { flag: 'a' });
-    console.log("创建完成, 共计 1 个");
+    if (account) {
+        fs.writeFileSync("./chatgptAccount.txt", JSON.stringify(account) + '\n', { flag: 'a' });
+        console.log("创建成功, 共计 1 个");
+    }
+
+    if (!account) {
+        console.log("创建失败, 共计 1 个");
+    }
+
 }
 
 async function getMultipleAccounts(num) {
@@ -39,7 +46,7 @@ async function getMultipleAccounts(num) {
 
         num--;
     }
-    
+
     console.log("创建完成, 共计 " + num + " 个\n");
     console.log("成功 " + successAccountCount + " 个\n");
     console.log("失败" + errorAccountCount + " 个\n");
