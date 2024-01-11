@@ -1,6 +1,7 @@
 # 基于NodeJs批量生成ChatGPT账号 
 > node版本需 >= 18.16.0 小于版本需自测  
-> 基于Pandora-Next实现不限制IP注册,目前默认使用的`https://chat.oaifree.com/auth/signup`(已套CF),请自行部署Pandora- Next  
+> 基于Pandora-Next实现不限制IP注册  
+> 目前默认使用的`https://chat.oaifree.com/auth/signup`(已套CF),请自行部署Pandora- Next  
 > 基于capsolver自动识别验证码  
 
 ## 使用方法
