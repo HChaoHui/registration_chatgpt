@@ -70,7 +70,7 @@ async function getAccount() {
 
         console.log("点击进行图像验证");
         await chatGPTPage.click('body > div.oai-wrapper > main > section > div > div > div > form > div.cc6121580 > button');
-        await chatGPTPage.waitForSelector('body > div > main > section > div > div > div > div:nth-child(2) > p > a');
+        await chatGPTPage.waitForSelector('body > div > main > section > div > div > div > div:nth-child(2) > p > a',{timeout:120000});
 
         console.log("创建完成");
         console.log("账号:" + mailValue);
