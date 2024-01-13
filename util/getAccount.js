@@ -2,6 +2,7 @@ const { puppeteer, puppeteerConfig } = require('./puppeteer');
 const config = require("./config");
 
 async function getAccount() {
+
     let browser;
     try {
         browser = await puppeteer.launch(puppeteerConfig);
@@ -13,7 +14,7 @@ async function getAccount() {
         console.log("打开临时邮箱页面");
         const tempMailPage = await browser.newPage();
         await tempMailPage.goto(config.MailAddress);
-        await tempMailPage.waitForTimeout(4000);
+        await tempMailPage.waitForTimeout(6000);
 
         const mailValue = await getValueFromSelector(tempMailPage, '#shortid');
         if (!mailValue) {
@@ -25,16 +26,44 @@ async function getAccount() {
 
         console.log("打开ChatGPT注册页面");
         const chatGPTPage = await browser.newPage();
-        await chatGPTPage.goto(config.RegisteredAddress);
-        await chatGPTPage.waitForTimeout(2000);
+        await chatGPTPage.goto(config.RegisteredAddress[config.RegisteredIndex]);
+
+        await chatGPTPage.waitForTimeout(6000);
+
+        if (config.sitePassword) {
+            let sitePasswordSelector = "#password"
+            console.log("插入sitePassword");
+            await insertText(chatGPTPage, sitePasswordSelector, config.sitePassword);
+            let sitePasswordButtonSelector = "body > div > main > section > div > div > div > form > div.cc6121580 > button"
+            await chatGPTPage.waitForTimeout(3000);
+            console.log("点击创建按钮");
+            await chatGPTPage.click(sitePasswordButtonSelector);
+            await chatGPTPage.waitForTimeout(6000);
+        }
 
         console.log("插入账号密码");
         await insertText(chatGPTPage, 'input#username', mailValue);
         await insertText(chatGPTPage, 'input#password', passWord);
-        await chatGPTPage.waitForTimeout(2000);
+        await chatGPTPage.waitForTimeout(3000);
 
         console.log("点击创建按钮");
         await chatGPTPage.click('button[type="submit"]');
+
+        await chatGPTPage.waitForTimeout(6000);
+        let tipsSelector = "#error-element-password"
+        const isTipsSelector = await chatGPTPage.$(tipsSelector);
+        if (isTipsSelector) {
+            const tipsValue = await chatGPTPage.$eval(tipsSelector, element => element.textContent);
+            if (tipsValue) {
+                if (tipsValue == "You have exceeded your rate limit.") {
+                    console.log(config.RegisteredAddress[config.RegisteredIndex] + "注册已达上限");
+                    config.RegisteredIndex == config.RegisteredAddress.length - 1 ? config.RegisteredIndex = 0 : config.RegisteredIndex += 1
+                }
+                await browser.close();
+                return;
+            }
+        }
+
         await chatGPTPage.waitForSelector('#submit-token');
 
         console.log("回到邮件页面");
@@ -50,15 +79,15 @@ async function getAccount() {
 
         console.log("回到注册页面");
         await bringPageToFront(browser, 2);
-        await chatGPTPage.waitForTimeout(2000);
+        await chatGPTPage.waitForTimeout(6000);
 
         console.log("点击粘贴按钮");
         await chatGPTPage.click('#submit-token');
-        await chatGPTPage.waitForTimeout(2000);
+        await chatGPTPage.waitForTimeout(6000);
 
         console.log("插入注册链接");
         await insertText(chatGPTPage, '#swal2-input', linkValue);
-        await chatGPTPage.waitForTimeout(2000);
+        await chatGPTPage.waitForTimeout(6000);
 
         console.log("点击确认按钮");
         await chatGPTPage.click('body > div.swal2-container.swal2-center.swal2-backdrop-show > div > div.swal2-actions > button.swal2-confirm.swal2-styled');
@@ -66,11 +95,11 @@ async function getAccount() {
 
         console.log("插入用户名");
         await insertText(chatGPTPage, '#username', "ChatGPT_Bot");
-        await chatGPTPage.waitForTimeout(3000);
+        await chatGPTPage.waitForTimeout(6000);
 
         console.log("点击进行图像验证");
         await chatGPTPage.click('body > div.oai-wrapper > main > section > div > div > div > form > div.cc6121580 > button');
-        await chatGPTPage.waitForSelector('body > div > main > section > div > div > div > div:nth-child(2) > p > a',{timeout:120000});
+        await chatGPTPage.waitForSelector('body > div > main > section > div > div > div > div:nth-child(2) > p > a', { timeout: 120000 });
 
         console.log("创建完成");
         console.log("账号:" + mailValue);
