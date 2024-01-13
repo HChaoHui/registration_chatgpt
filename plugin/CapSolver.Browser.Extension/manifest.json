@@ -6,9 +6,10 @@
     "48": "icons/icon-48x48.png",
     "128": "icons/icon-128x128.png"
   },
-  "version": "1.10.0",
+  "version": "1.9.0",
   "permissions": [
     "storage",
+    "scripting",
     "contextMenus"
   ],
   "host_permissions": [
@@ -71,7 +72,7 @@
       "js": [
         "recaptcha-recognition.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true
     },
@@ -83,7 +84,7 @@
       "js": [
         "aws-recognition.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true
     }
