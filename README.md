@@ -2,17 +2,21 @@
 > node版本需 >= 18.16.0 小于版本需自测  
 > 基于Pandora-Next实现不限制IP注册  
 > 目前默认使用的`https://chat.oaifree.com/auth/signup`(已套CF),请自行部署Pandora- Next  
+> 目前PandoraNext注册账号是由消耗额度为1:100  
 > 基于capsolver自动识别验证码  
+> 基于forsaken Mail临时邮箱获得随机邮箱与验证码
 
 ## 使用方法
 
 1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`  
 2. cd registration_chatgpt
 3. npm install
-4. `plugin/CapSolver.Browser.Extension/assets/config.js`，修改里面的apiKey为你的capsolver Key  
+4. `ntil/config.js`，修改里面的`RegisteredAddress`为你搭建PandoraNext地址，`MailAddress`为你搭建的`forsaken Mail`
+5. `plugin/CapSolver.Browser.Extension/assets/config.js`，修改里面的apiKey为你的capsolver Key  
 
 capsolver官网`https://www.capsolver.com/`  
 capsolver官网可以领取试用的1美金，大概可以自动识别1000次左右  
+forsaken Mail地址`[forsaken Mail](https://github.com/denghongcai/forsaken-mail)`  
 
 ## 生成单个  
 
