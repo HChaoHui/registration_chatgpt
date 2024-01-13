@@ -6,6 +6,12 @@
 > 基于capsolver自动识别验证码  
 > 基于forsaken Mail临时邮箱获得随机邮箱与验证码
 
+## 实现功能
+
+1. 自动获取邮箱，生成密码  
+2. 注册池，PandoraNext有注册限制，可以添加多个注册地址，额度不够时自动切换注册地址  
+
+
 ## 使用方法
 
 1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`  
