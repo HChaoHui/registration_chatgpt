@@ -63,6 +63,11 @@ async function getAccount() {
                     config.RegisteredIndex == config.RegisteredAddress.length - 1 ? config.RegisteredIndex = 0 : config.RegisteredIndex += 1
                 }
 
+                if (tipsValue == "too many signups from the same IP") {
+                    errorTip = config.RegisteredAddress[config.RegisteredIndex] + "IP注册过多";
+                    config.RegisteredIndex == config.RegisteredAddress.length - 1 ? config.RegisteredIndex = 0 : config.RegisteredIndex += 1
+                }
+
                 console.log(errorTip);
               
                 await browser.close();
