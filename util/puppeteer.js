@@ -5,21 +5,24 @@ const { executablePath } = require('puppeteer');
 const fs = require("fs")
 let pathToExtension;
 let configPath;
+let configTemplatePath;
 let configPathData;
 let configResult;
 
 switch (config.captChaType) {
     case "1":
         pathToExtension = require('path').join(__dirname, '../plugin/CapSolver.Browser.Extension');
+        configTemplatePath = require('path').join(__dirname, '../plugin/CapSolver.Browser.Extension/assets/configTemplate.js');
         configPath = require('path').join(__dirname, '../plugin/CapSolver.Browser.Extension/assets/config.js');
-        configPathData = fs.readFileSync(configPath, 'utf8');
+        configPathData = fs.readFileSync(configTemplatePath, 'utf8');
         configResult = configPathData.replace(/apiKey: ''/g, `apiKey: '${config.captChaKey}'`,);
         break;
 
     case "2":
         pathToExtension = require('path').join(__dirname, '../plugin/YesSolver.Browser.Extension');
+        configTemplatePath = require('path').join(__dirname, '../plugin/YesSolver.Browser.Extension/configTemplate.js');
         configPath = require('path').join(__dirname, '../plugin/YesSolver.Browser.Extension/config.js');
-        configPathData = fs.readFileSync(configPath, 'utf8');
+        configPathData = fs.readFileSync(configTemplatePath, 'utf8');
         configResult = configPathData.replace(/clientKey: ''/g, `clientKey: '${config.captChaKey}'`,);
         break;
 
