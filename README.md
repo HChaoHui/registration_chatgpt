@@ -5,6 +5,7 @@
 > 目前默认使用的`https://chat.oaifree.com/auth/signup`(已套 CF),请自行部署 Pandora-Next  
 > 目前 PandoraNext 注册账号是由消耗额度为 1:100  
 > 基于 capsolver 自动识别验证码  
+> 基于 yesCaptCha 自动识别验证码  
 > 基于 forsaken Mail 临时邮箱获得随机邮箱与验证码  
 
 ## 实现功能
