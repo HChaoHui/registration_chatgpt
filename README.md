@@ -1,43 +1,48 @@
-# 基于NodeJs批量生成ChatGPT账号 
-> node版本需 >= 18.16.0 小于版本需自测  
-> 基于Pandora-Next实现不限制IP注册  
-> 目前默认使用的`https://chat.oaifree.com/auth/signup`(已套CF),请自行部署Pandora- Next  
-> 目前PandoraNext注册账号是由消耗额度为1:100  
-> 基于capsolver自动识别验证码  
-> 基于forsaken Mail临时邮箱获得随机邮箱与验证码
+# 基于 NodeJs 批量生成 ChatGPT 账号
+
+> node 版本需 >= 18.16.0 小于版本需自测  
+> 基于 Pandora-Next 实现不限制 IP 注册  
+> 目前默认使用的`https://chat.oaifree.com/auth/signup`(已套 CF),请自行部署 Pandora-Next  
+> 目前 PandoraNext 注册账号是由消耗额度为 1:100  
+> 基于 capsolver 自动识别验证码  
+> 基于 forsaken Mail 临时邮箱获得随机邮箱与验证码  
 
 ## 实现功能
 
-1. 自动获取邮箱，生成密码  
-2. 注册池，PandoraNext有注册限制，可以添加多个注册地址，额度不够时自动切换注册地址  
-
+1. 自动获取邮箱，生成密码
+2. 注册池，PandoraNext 有注册限制，可以添加多个注册地址，额度不够时自动切换注册地址
 
 ## 使用方法
 
-1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`  
+1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`
 2. cd registration_chatgpt
 3. npm install
-4. `ntil/config.js`，修改里面的`RegisteredAddress`为你搭建PandoraNext地址，`MailAddress`为你搭建的`forsaken Mail`
-5. `plugin/CapSolver.Browser.Extension/assets/config.js`，修改里面的apiKey为你的capsolver Key  
+4. `util/config.js`，修改里面的`RegisteredAddress`为你搭建 PandoraNext 地址池，`MailAddress`为你搭建的`forsaken Mail`
+5. `util/config.js`，修改里面的`captChaKey`为你验证码平台的 Key
+6. `util/config.js`，修改里面的`captChaType`为你对应的验证码平台，1 为 capsolver 2 为 yesCaptCha
 
-capsolver官网`https://www.capsolver.com/`  
-capsolver官网可以领取试用的1美金，大概可以自动识别1000次左右  
-forsaken Mail地址`[forsaken Mail](https://github.com/denghongcai/forsaken-mail)`  
+capsolver官网：[https://www.capsolver.com/](https://www.capsolver.com/)
+capsolver官网可以领取试用的 1 美金，大概可以自动识别 1000 次左右  
 
-## 生成单个  
+yesCaptCha官网：[https://yescaptcha.com/](https://yescaptcha.com/i/nLKXuE)
+yesCaptCha官网注册可以找客服领取1500积分试用，识别一次验证码大概要3积分  
+
+forsaken Mail 地址：[forsaken Mail](https://github.com/denghongcai/forsaken-mail)
+
+## 生成单个
 
 1. npm run test
 2. 看到创建完成
 3. 下面就是自动生成的账号密码
 
-## 生成多个  
+## 生成多个
 
-1. npm run get {num} 例如 `npm run get 10` 批量生成10个
+1. npm run get {num} 例如 `npm run get 10` 批量生成 10 个
 2. 看到创建完成后在项目目录下找到`chatgptAccount.txt` 里面就是生成的账号密码
 
 ## 可能遇到的问题
 
-1. 报错提示`Could not find Chrome`, 此错误说明电脑环境没有Chrome, 使用`npx puppeteer browsers install chrome`安装即可
+1. 报错提示`Could not find Chrome`, 此错误说明电脑环境没有 Chrome, 使用`npx puppeteer browsers install chrome`安装即可
 2. 报错提示`No element found for selector: #swal2-input`, 此错误说明网络可能有些慢,打开`util/getAccount.js`,全局搜索`chatGPTPage.waitForTimeout`,将里面的值调高一些,例如`await chatGPTPage.waitForTimeout(2000);`改为`await chatGPTPage.waitForTimeout(6000);`
 
 ## 免责声明
