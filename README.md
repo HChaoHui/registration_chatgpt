@@ -13,7 +13,21 @@
 1. 自动获取邮箱，生成密码
 2. 注册池，PandoraNext 有注册限制，可以添加多个注册地址，额度不够时自动切换注册地址
 
-## 使用方法
+## 使用方法（Docker）
+
+1. 拉取docker镜像`docker pull nocn/registration_chatgpt:0.1.1`  
+2. 创建一个config文件夹`cd / && mkdir registration_chatgpt_config`  
+3. 将`util/config.js`放入`registration_chatgpt_config`里面，目录为`registration_chatgpt_config/config.js`  
+4. `registration_chatgpt_config/config.js`，修改里面的`RegisteredAddress`为你搭建 PandoraNext 地址池，`MailAddress`为你搭建的`forsaken Mail`  
+5. `registration_chatgpt_config/config.js`，修改里面的`captChaKey`为你验证码平台的 Key  
+6. `registration_chatgpt_config/config.js`，修改里面的`captChaType`为你对应的验证码平台，1 为 capsolver 2 为 yesCaptCha  
+7.  docker命令
+    ```
+     docker run -v /registration_chatgpt_config/:/app/config/ --name registration_chatgpt nocn/registration_chatgpt:0.1.1
+    ```  
+8. 在`registration_chatgpt_config`目录下找到`chatgptAccount.txt` 里面就是生成的账号密码  
+
+## 使用方法（NodeJs）
 
 1. clone 源码 `git clone https://github.com/HChaoHui/registration_chatgpt.git`
 2. cd registration_chatgpt
